@@ -2,7 +2,7 @@
 <body>
   <div class="row mt-3">
     <div class="col-8 offset-3">
-      <h3>Listing Details :</h3>
+      <h3><%= listing.title %> :</h3>
     </div>
     <!-- <ul>
         <li><%= listing.title %></li>
@@ -17,22 +17,87 @@
         class="card-img-top show-img"
         alt="listing_image"
       />
-      <div class="card-body">
-        <p class="card-text">
-          <b><%= listing.title %></b><br />
-          <%= listing.description %><br />
-          &#8377; <%= listing.price.toLocaleString("en-IN") %> / night<br />
-          <%= listing.location %><br />
-          <%= listing.country %><br />
-        </p>
+      <div class="card-body mt-3">
+          <p class="card-text"><i>Owner :<%= listing.owner.username %></i></p>
+          <p class="card-text"><%= listing.description %></p>
+          <p class="card-text">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</p>
+          <p class="card-text"><%= listing.location %></p>
+          <p class="card-text"><%= listing.country %></p>
+        
       </div>
     </div>
     
   </div>
+  <% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
   <div class="btns mb-3">
     <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark col-1 offset-3 add-btn">Edit</a>
     <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
         <button class="btn btn-dark offset-5">Delete</button>
     </form>
     </div>
+    <hr>
+    <% } %>
+    <% if (currentUser) { %>
+    <div class="col-8 offset-3">
+      <h4>Leave a Review</h4>
+      <form action="/listings/<%=listing._id%>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="mb-3 mt-3">
+          <label for="review">Rating</label>
+          <input type="range" min="1" max="5" id="review" name="review[rating]" class="form-range" />
+        </div>
+        <div>
+          <label for="comment">Comment</label>
+          <textarea id="comment" name="review[comment]" class="form-control" cols="30" rows="5" required></textarea>
+        </div>
+        <button class="btn btn-dark mt-3 mb-3">Submit</button>
+      </form>
+    </div>
+    <% } %>
+    
+    <h4>Reviews</h4>
+<div class="col-12 ">
+  
+  <% if (listing.reviews && listing.reviews.length > 0) { %>
+    <div class="d-flex flex-wrap gap-3">
+      <% for (let singleReview of listing.reviews) { %>
+        <div class="card mb-3 border border-muted p-2" style="width: calc(25% - 0.75rem);">
+          <div class="card-body">
+            <h6 class="card-title"><%= singleReview.author ? singleReview.author.username : 'Anonymous' %></h6>
+            <h6 class="card-title"><%= singleReview.comment %></h6>
+            <div class="mb-2">
+              <% for(let i = 1; i <= 5; i++) { %>
+                <% if(i <= singleReview.rating) { %>
+                  <i class="fas fa-star text-warning"></i>
+                <% } else { %>
+                  <i class="far fa-star text-warning"></i>
+                <% } %>
+              <% } %>
+            </div>
+            <small class="text-muted d-block mb-2">Posted on <%= singleReview.createdAt.toDateString() %></small>
+            <form action="/listings/<%= listing._id %>/reviews/<%= singleReview._id %>?_method=DELETE" method="POST" class="d-inline">
+              <button class="btn btn-sm btn-danger">Delete Review</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="card border border-muted ">
+      <div class="card-body">
+        <p class="card-text text-center">No reviews yet. Be the first to review!</p>
+      </div>
+    </div>
+  <% } %>
+    </div>
 </body>
+
+
+<!-- <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div> -->
