@@ -14,6 +14,7 @@ const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const Review = require("./models/review");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -32,6 +33,7 @@ const {
   renderEditForm,
   updateListing,
   deleteListing,
+  search,
 } = require("./controllers/listings");
 const { createReview, deleteReview } = require("./controllers/reviews");
 const { signupForm, createUser, loginForm, loginUser, logoutUser } = require("./controllers/user");
@@ -43,8 +45,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+const store = MongoStore.create({
+  mongoUrl: process.env.ATLASDB_URL,
+  touchAfter: 24 * 3600, // time period in seconds
+  crypto: {
+    secret: process.env.SECRET 
+  }
+  
+});
+
+store.on("error", function (e) {
+  console.log("Mongo Session Store Error", e);
+});
+
 const sessionOptions = {
-  secret: "mysupersecretcode",
+  store: store,
+  secret: process.env.SECRET ,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -53,6 +69,8 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -76,7 +94,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.engine("ejs", ejsMate);
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wonderLust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wonderLust";
+const MONGO_URL = process.env.ATLASDB_URL;
 
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -112,6 +131,7 @@ app.post(
   loginUser
 );
 
+
 //User logout route
 app.get("/users/logout", logoutUser);
 
@@ -120,7 +140,8 @@ app.get("/listings", wrapAsync(index));
 
 //New Route
 app.get("/listings/new", isLoggedIn, renderNewForm);
-
+// Search Route
+app.get("/listings/search", wrapAsync(search));
 //Show Route
 app.get("/listings/:id", wrapAsync(showListings));
 

@@ -87,3 +87,39 @@ module.exports.deleteListing = async (req, res) => {
     req.flash("success", "Listing deleted successfully!");
   res.redirect("/listings");
 }
+
+module.exports.search = async (req, res) => {
+  const { q } = req.query;
+  
+  if (!q || q.trim() === "") {
+    req.flash("error", "Please enter a search term");
+    return res.redirect("/listings");
+  }
+
+  try {
+    // Search in multiple fields using regex for partial matches
+    const searchResults = await Listing.find({
+      $or: [
+        { title: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+        { location: { $regex: q, $options: "i" } },
+        { country: { $regex: q, $options: "i" } }
+      ]
+    }).populate("owner");
+
+    if (searchResults.length === 0) {
+      req.flash("error", `No listings found for "${q}"`);
+      return res.redirect("/listings");
+    }
+
+    // Pass search results to the same index template but with filtered results
+    res.render("listings/index.ejs", { 
+      alllistings: searchResults,
+      searchQuery: q,
+      isSearchResult: true
+    });
+  } catch (error) {
+    req.flash("error", "Error occurred while searching");
+    res.redirect("/listings");
+  }
+}

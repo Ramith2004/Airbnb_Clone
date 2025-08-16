@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+
+% ---------- Packages ----------
+\usepackage[margin=0.7in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{fontawesome5} % for icons
+\usepackage{mathpazo} % professional font
+
+% ---------- Colors ----------
+\definecolor{myblue}{RGB}{25, 118, 210}        % Material Blue
+\definecolor{lightblue}{RGB}{66, 165, 245}     % Light Blue
+\definecolor{darkblue}{RGB}{13, 71, 161}       % Dark Blue
+\definecolor{accentblue}{RGB}{41, 182, 246}    % Cyan Blue
+\definecolor{graytext}{RGB}{84, 110, 122}      % Blue Gray
+\definecolor{lightgray}{RGB}{176, 190, 197}    % Light Blue Gray
+
+% ---------- Hyperlink style ----------
+\hypersetup{
+  colorlinks=true,
+  urlcolor=darkblue,
+  linkcolor=myblue,
+  filecolor=accentblue,
+  citecolor=darkblue
+}
+
+% ---------- Section formatting ----------
+\titleformat{\section}{\color{darkblue}\bfseries\Large}{}{0pt}{}[{\titlerule[0.8pt]}]
+\titlespacing*{\section}{0pt}{8pt}{6pt} 
+
+% ---------- List spacing ----------
+\setlist[itemize]{leftmargin=1.2em, itemsep=3pt, topsep=2pt}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+% ---------- Helper commands ----------
+\newcommand{\sep}{\textcolor{accentblue}{\,|\,}}
+\newcommand{\role}[1]{\textcolor{myblue}{\textbf{#1}}}
+\newcommand{\smallgray}[1]{\textcolor{graytext}{\small #1}}
+\newcommand{\highlight}[1]{\textcolor{darkblue}{\textbf{#1}}}
+\newcommand{\icontext}[2]{\textcolor{myblue}{\faIcon{#1}} \ #2}
+
+\begin{document}
+
+% ===================== Header =====================
+\begin{center}
+    {\Huge \textbf{\textcolor{darkblue}{Ramith Chatterjee}}} \\[8pt]
+    \textcolor{lightgray}{\rule{0.8\textwidth}{0.5pt}} \\[6pt]
+    \icontext{envelope}{} \href{mailto:ramithstewart2004@gmail.com}{\textcolor{myblue}{ramithstewart2004@gmail.com}} \sep
+    \icontext{phone}{} \textcolor{graytext}{+91 9937605713} \sep
+    \icontext{linkedin}{} \href{https://www.linkedin.com/in/ramithchatterjee/}{\textcolor{myblue}{linkedin.com/in/ramithchatterjee}} \sep
+    \icontext{github}{} \href{https://github.com/Ramith2004}{\textcolor{myblue}{github.com/Ramith2004}}
+\end{center}
+
+\vspace{6pt}
+\smallgray{Final-year CSE student and aspiring full-stack developer with strong skills in programming, data structures, and algorithms. Proficient in the MERN stack (React.js, Node.js, Express.js, MongoDB) with additional experience in Python, Java, and C++. Completed an internship at Indian Railways and built projects including e-commerce, real-time messaging, and weather apps, with a passion for creating efficient, user-focused solutions.}
+
+% ===================== Education =====================
+\section*{Education}
+\icontext{graduation-cap}{\highlight{Bachelor of Technology in Computer Science \& Engineering (BPUT, Odisha)}} \hfill \smallgray{2022 -- 2026}\\
+\textcolor{graytext}{Parala Maharaja Engineering College, Berhampur}
+
+% ===================== Experience =====================
+\section*{Experience}
+\icontext{briefcase}{\highlight{Indian Railways, Bhubaneswar}} \hfill \smallgray{Internship}\\
+\role{Full Stack Developer Intern} \\[2pt]
+Developed a \highlight{Complaint Management System} using \highlight{React.js}, \highlight{Express.js}, and \highlight{MongoDB}.  
+\begin{itemize}
+  \item Reduced complaint resolution time by \highlight{40\%} through automated tracking and real-time updates.  
+  \item Built REST APIs that improved data handling efficiency by \highlight{30\%}.  
+  \item Designed a responsive UI that reduced manual form-filling errors by \highlight{25\%}.  
+\end{itemize}
+
+% ===================== Projects =====================
+\section*{Projects}
+\icontext{cloud-sun}{\highlight{WeatherView}} \hfill \href{https://weather-view-one.vercel.app}{\smallgray{[Live Demo]}} \\
+A visually rich weather app combining real-time data with AI-curated imagery.  
+\begin{itemize}
+  \item Implemented weather-matched backgrounds, enhancing user experience (+\highlight{35\%} session time).  
+  \item Reduced API response latency by \highlight{20\%} through optimized request handling.  
+\end{itemize}
+
+\vspace{6pt}
+\icontext{shopping-cart}{\highlight{Shoplyst – Fullstack E-commerce Website}} \hfill \href{https://shoplyst-a-fullstack-e-commerce-app.onrender.com}{\smallgray{[Live Demo]}} \\
+A scalable MERN-based e-commerce platform.  
+\begin{itemize}
+  \item Improved checkout speed by \highlight{30\%} with optimized API calls.  
+  \item Integrated authentication and product management, reducing cart abandonment rate by \highlight{25\%}.  
+  \item Designed a responsive UI, increasing mobile usability by \highlight{40\%}.  
+\end{itemize}
+
+\vspace{6pt}
+\icontext{comments}{\highlight{Chatly – Real-time Messaging App}} \hfill \href{https://chatly-a-messaging-app.onrender.com}{\smallgray{[Live Demo]}} \\
+A real-time chat app built with MERN stack + Socket.io.  
+\begin{itemize}
+  \item Enabled real-time updates with Socket.io, reducing message delivery delay by \highlight{45\%}.  
+  \item Designed multi-room chat functionality for \highlight{100+ concurrent users}.  
+  \item Enhanced user retention by \highlight{20\%} with responsive and intuitive UI.  
+\end{itemize}
+
+% ===================== Professional Skills =====================
+\section*{Professional Skills}
+\icontext{code}{\highlight{Programming Languages:}} Python, Java, C++ (OOP, problem solving). \\[3pt]
+\icontext{laptop-code}{\highlight{Web Development:}} HTML, CSS, JavaScript; React, Node.js. \\[3pt]
+\icontext{database}{\highlight{Database Management:}} SQL and NoSQL (MySQL, MongoDB). \\[3pt]
+\icontext{project-diagram}{\highlight{Software Development:}} Git, SDLC, Agile methodologies.
+
+\end{document}

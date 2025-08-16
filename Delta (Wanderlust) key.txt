@@ -1,2 +1,7 @@
 sgJKFRXBad7YpylI
 Ramith
+
+mongodb+srv://Ramith:sgJKFRXBad7YpylI@cluster0.w0lwwn5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+Ramith
+Ramith2004
